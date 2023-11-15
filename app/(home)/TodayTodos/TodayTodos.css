@@ -1,0 +1,25 @@
+.todaytodos_page{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.todaytodos_container{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100vw;
+  border: solid 1px white;
+  /* margin: 50px;  */
+  /* padding: 20px; */
+}
+
+.todaytodos_title{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.todaytodos_empty {
+  margin: 100px;
+}

@@ -1,0 +1,50 @@
+.todaytodo_container{
+  display: flex;
+  width: 70vw;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  /* border-bottom: 1px solid white; */
+  padding: 10px;
+}
+
+.todaytodo_left{
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+}
+
+.todaytodo_check{
+  display: flex;
+  margin-right: 10px;
+}
+
+.todaytodo_todo{
+  display: flex;
+  min-width: 50vw;
+  padding-bottom: 2px;
+  border: none;
+  border-bottom: 1px solid white;
+  background-color: black;
+}
+
+.todaytodo_todo:focus{
+  outline: none;
+}
+
+.todaytodo_right{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.todaytodo_update{
+  padding: 6px;
+  cursor: pointer;
+}
+
+.todaytodo_delete{
+  padding: 6px;
+  cursor: pointer;
+}

@@ -105,3 +105,32 @@ a {
     color-scheme: dark;
   }
 }
+
+.home_container{ 
+  display: flex;
+  width: 100%; 
+  height: 100%; 
+  margin-top: 50px; 
+} 
+
+.aim_container{ 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  border: solid 1px white; 
+} 
+
+.nav{ 
+  display: flex; 
+  width: 100%; 
+  height: 60px; 
+  flex-direction: row; 
+  justify-items: center; 
+  align-items: center; 
+  padding: 20px; 
+  border-bottom: 1px solid white; 
+} 
+
+.todaytodo, .week, .bucketbox{ 
+  margin-right: 20px; 
+}
