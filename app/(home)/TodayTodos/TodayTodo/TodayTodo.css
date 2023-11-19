@@ -19,18 +19,31 @@
   margin-right: 10px;
 }
 
-.todaytodo_todo{
+.todaytodo_input{
+  min-width: 50vw;
+  margin-left: 32px;
+  padding-left: 4px;
+  padding-bottom: 4px;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid white;
+  background-color: black;
+}
+
+.todaytodo_input:focus{
+  outline: none;
+}
+
+/* .todaytodo_todo_content{
   display: flex;
   min-width: 50vw;
   padding-bottom: 2px;
   border: none;
   border-bottom: 1px solid white;
   background-color: black;
-}
+} */
 
-.todaytodo_todo:focus{
-  outline: none;
-}
+
 
 .todaytodo_right{
   display: flex;
@@ -41,10 +54,16 @@
 
 .todaytodo_update{
   padding: 6px;
+  background-color: black;
+  border: none;
+  font-size: 16px;
   cursor: pointer;
 }
 
 .todaytodo_delete{
   padding: 6px;
+  background-color: black;
+  border: none;
+  font-size: 16px;
   cursor: pointer;
 }

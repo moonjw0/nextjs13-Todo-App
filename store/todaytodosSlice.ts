@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-// import { RootState } from './store';
 
 export interface Todo {
   id: number;
+  dateTodo: string;
   content: string;
+  completed: boolean;
 }
 
 export interface TodayTodos {
@@ -14,25 +15,21 @@ export interface TodayTodos {
 }
 
 const initialState: TodayTodos = {
-  todos: [
-    {
-      id:1 ,
-      content: "졸리다"
-    }
-  ],
+  todos: [],
   loading: 'idle',
   error: "",
 };
 
-
-export const fetchTodayTodos = createAsyncThunk(
+// pocketbase 전체 데이터 가져오는 부분
+// RTK 저장은 따로 extraReducer에서
+export const fetchTodayTodos = createAsyncThunk( 
   'todaytodos/fetchTodayTodos', 
   async(_, thunkAPI) => {
     try{
-    const response = await axios.get('http://127.0.0.1:8090/api/collections/todolist/records');
-    // console.log('TodayTodos response', response.data);
-    return response.data;
-    } catch (error) {
+      const response = await axios.get('http://127.0.0.1:8090/api/collections/todolist/records');
+      // console.log('TodayTodos response', response.data);
+      return response.data;
+    } catch (error) { 
       return thunkAPI.rejectWithValue("에러");
     }
 })
@@ -43,28 +40,49 @@ export const todaytodosSlice = createSlice({
   name: 'todaytodos',
   initialState,
   reducers: {
-    addTodos: (state, action: PayloadAction<string>) => {
+
+    // 새로운 할 일 추가
+    addTodos: (state, action: PayloadAction<{content: string; dateTodo_str: string}>) => {
+      const { content, dateTodo_str } = action.payload;
       const newTodo = {
         id: Date.now(),
-        content: action.payload
+        dateTodo: dateTodo_str,
+        content: content,
+        completed: false,
       }
       state.todos.push(newTodo);
     },
+
+    // 완료 여부 업데이트
+    updateCompleted: (state, action: PayloadAction<{update_id: number; update_completed: boolean}>) => {
+      const { update_id, update_completed } = action.payload;
+      const updatedtodo = state.todos.find(todo => todo.id === update_id);
+      if (updatedtodo) {
+        updatedtodo.completed = update_completed;
+      }
+    },
+
+    // 할 일 내용 변경 업데이트
+    updateTodos: (state, action: PayloadAction<{update_id: number; update_todo: string}>) => {
+      const { update_id, update_todo } = action.payload;
+      const updatedtodo = state.todos.find(todo => todo.id === update_id);
+      if (updatedtodo) {
+        updatedtodo.content = update_todo;
+      }
+    },
+
+    // 할 일 삭제
     deleteTodos: (state, action: PayloadAction<number>) => {
       state.todos = state.todos.filter(todo => todo.id !== action.payload);
     },
-    updateTodos: (state, action: PayloadAction<{update_id: number; newtodo: string}>) => {
-      const { update_id, newtodo } = action.payload;
-      const updatedtodo = state.todos.find(todo => todo.id === update_id);
-      if (updatedtodo) {
-        updatedtodo.content = newtodo;
-      }
-    },
+
+    // 전체 삭제
     clearTodayTodos: (state) => {
       state.todos = [];
     },
   },
 
+  // Pocketbase -> RTK 저장
   extraReducers: (builder) => {
     builder
     .addCase(fetchTodayTodos.pending, (state) => {
@@ -72,7 +90,7 @@ export const todaytodosSlice = createSlice({
     })
     .addCase(fetchTodayTodos.fulfilled, (state, action) => {
       state.loading = 'success';
-      state.todos = action.payload;
+      state.todos = action.payload.items;
     })
     .addCase(fetchTodayTodos.rejected, (state, action) => {
       state.loading = 'failed';
@@ -80,7 +98,24 @@ export const todaytodosSlice = createSlice({
     })
   }
 })
-export const { addTodos, deleteTodos, updateTodos, clearTodayTodos } = todaytodosSlice.actions
+
+export const { addTodos, updateCompleted, updateTodos, deleteTodos, clearTodayTodos } = todaytodosSlice.actions
 // export const selectTodayTodo = (state: RootState) => state.todaytodos.todos; // select 결과
 
 export default todaytodosSlice.reducer;
+
+// initial 못 넣나..?
+    // {
+    //   id:1 ,
+    //   dateTodo: new Date('2023-11-17'),
+    //   content: "졸리다",
+    //   completed: false,
+
+    // },
+    // {
+    //   id:2 ,
+    //   dateTodo: new Date('2023-11-20'),
+    //   content: "이건 20일에 할 일",
+    //   completed: false,
+
+    // }
