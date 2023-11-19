@@ -131,6 +131,6 @@ a {
   border-bottom: 1px solid white; 
 } 
 
-.todaytodo, .week, .bucketbox{ 
+.todaytodo, .month, .bucketbox{ 
   margin-right: 20px; 
 }

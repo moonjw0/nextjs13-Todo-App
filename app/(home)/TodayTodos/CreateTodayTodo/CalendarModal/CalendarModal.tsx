@@ -3,7 +3,6 @@ import  { useRef } from 'react'
 import { Calendar } from 'react-calendar';
 import useOnClickOutside from './useOnClickOutside';
 import './CalendarModal.css'
-// import 'react-calendar/dist/Calendar.css';
 
 const CalendarModal = ({setCalendarOpen, setTodoDate, todoDate}: {setCalendarOpen: any; setTodoDate: any; todoDate: Date; }) => {
 
@@ -13,9 +12,7 @@ const CalendarModal = ({setCalendarOpen, setTodoDate, todoDate}: {setCalendarOpe
 
   const handleTodoDate = (value: Value, event: React.MouseEvent<HTMLButtonElement>) => {
     const newTodoDate = Array.isArray(value) ? value[0] : value;
-    
     if (newTodoDate){
-      
       setTodoDate(newTodoDate);
       setCalendarOpen(false);
     }
@@ -30,7 +27,7 @@ const CalendarModal = ({setCalendarOpen, setTodoDate, todoDate}: {setCalendarOpe
       {/* <div className='modal' ref={ref}> */}
       <div className='modal'>
         <span className='modal-close' onClick={() => setCalendarOpen(false)}>X</span>
-        <Calendar onChange={handleTodoDate} value={todoDate} />
+        <Calendar locale="ko-KR" onChange={handleTodoDate} value={todoDate} />
       </div>
     </div>
     

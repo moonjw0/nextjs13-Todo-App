@@ -1,10 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit'
 import todaytodosSlice from './todaytodosSlice'
 import { useDispatch } from 'react-redux'
+import monthtodosSlice from './monthtodosSlice'
+import postToPocketSlice from './postToPocketSlice'
+import deleteToPocketSlice, { deleteToPocket } from './deleteToPocketSlice';
 
 export const store = configureStore({
   reducer: {
     todaytodos: todaytodosSlice,
+    monthtodos: monthtodosSlice,
+    postToPocket: postToPocketSlice,
+    deleteToPocket: deleteToPocketSlice,
   },
 })
 

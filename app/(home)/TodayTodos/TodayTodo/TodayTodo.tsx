@@ -3,17 +3,30 @@ import { useState } from 'react'
 import './TodayTodo.css'
 import { useAppDispatch } from '@/store/hooks';
 import { deleteTodos, updateCompleted, updateTodos } from '@/store/todaytodosSlice';
+import { updateToPocket } from '@/store/updateToPocketSlice';
 
 const TodayTodo = ({ id, todo_content }: {id: number; todo_content: string}) => {
   const dispatch = useAppDispatch();
   const [completed, setCompleted] = useState(false); 
-  const [todoContent, setTodoContent] = useState(todo_content); // 왜왜왜 왜그러는거야 왜
+  const [todoContent, setTodoContent] = useState(todo_content);
   const [update, setUpdate] = useState(false); // true: 수정가능, false: 수정불가능
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric', 
+    month: '2-digit', 
+    day: '2-digit'
+  };
+  const formattedDate = new Date().toLocaleDateString('ko-KR', options).replace(/\. /g, '-').replace(/\./, '');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if(update){ // 업데이트가 true일때 제출? = 수정끝
       dispatch(updateTodos({ update_id: id, update_todo: todoContent }));
+      const updateTodo = {
+        content: todoContent,
+        dateTodo: formattedDate,
+      }
+      const id_str = id.toString();
+      dispatch(updateToPocket({id: id_str, updateTodo}))
     }
     setUpdate(!update);
   }     

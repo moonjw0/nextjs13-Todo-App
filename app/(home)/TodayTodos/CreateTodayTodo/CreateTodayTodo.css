@@ -1,14 +1,14 @@
-.createtodo_container{
+.createtodaytodo_container{
   display: flex;
   width: 70vw;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  /* border-bottom: 1px solid white; */
-  padding: 10px;
+  padding: 20px;
+  margin-bottom: 50px;
 }
 
-.createtodo_date{
+.createtodaytodo_date{
   width: 15vw;
   text-align: center;
   background-color: black;
@@ -17,7 +17,7 @@
   padding-bottom: 4px;
   font-size: 16px;
 }
-.createtodo_input{
+.createtodaytodo_input{
   min-width: 30vw;
   margin-left: 32px;
   padding-left: 4px;

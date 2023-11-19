@@ -35,9 +35,9 @@ export const fetchTodos = createAsyncThunk(
 })
 
 
-// 접근경로: state -> (name)todaytodos -> todos -> todo -> id, todo, completed
-export const todaytodosSlice = createSlice({
-  name: 'todaytodos',
+// 접근경로: state -> (name)monthtodos -> todos -> todo -> id, todo, completed
+export const monthtodosSlice = createSlice({
+  name: 'monthtodos',
   initialState,
   reducers: {
 
@@ -99,23 +99,7 @@ export const todaytodosSlice = createSlice({
   }
 })
 
-export const { addTodos, updateCompleted, updateTodos, deleteTodos, clearTodayTodos } = todaytodosSlice.actions
+export const { addTodos, updateCompleted, updateTodos, deleteTodos, clearTodayTodos } = monthtodosSlice.actions
 // export const selectTodayTodo = (state: RootState) => state.todaytodos.todos; // select 결과
 
-export default todaytodosSlice.reducer;
-
-// initial 못 넣나..?
-    // {
-    //   id:1 ,
-    //   dateTodo: new Date('2023-11-17'),
-    //   content: "졸리다",
-    //   completed: false,
-
-    // },
-    // {
-    //   id:2 ,
-    //   dateTodo: new Date('2023-11-20'),
-    //   content: "이건 20일에 할 일",
-    //   completed: false,
-
-    // }
+export default monthtodosSlice.reducer;

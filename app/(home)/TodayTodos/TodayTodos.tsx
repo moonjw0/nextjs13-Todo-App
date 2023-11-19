@@ -3,16 +3,22 @@ import React, { useEffect } from 'react'
 import TodayTodo from './TodayTodo/TodayTodo'
 import { useAppDispatch, useAppSelector } from '../../../store/hooks'
 import './TodayTodos.css'
-import { Todo, fetchTodayTodos } from '../../../store/todaytodosSlice';
-import CreateTodo from './CreateTodo/CreateTodo'
+import { Todo, fetchTodos } from '../../../store/todaytodosSlice';
+import CreateTodayTodo from './CreateTodayTodo/CreateTodayTodo'
 
 const TodayTodos = () => {
   const dispatch = useAppDispatch(); 
-  const today = new Date().toISOString().split('T')[0]; // 2023-11-17
+
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric', 
+    month: '2-digit', 
+    day: '2-digit'
+  };
+  const today = new Date().toLocaleDateString('ko-KR', options).replace(/\. /g, '-').replace(/\./, '');
 
   // 포켓베이스에서 RTK로 데이터 가져옴
   useEffect(() => {
-    dispatch(fetchTodayTodos()); 
+    dispatch(fetchTodos()); 
   }, [dispatch]);
 
   // state.todaytodos: store 정의된 이름
@@ -26,7 +32,8 @@ const TodayTodos = () => {
     <div className='todaytodos_page'>
       <div className='todaytodos_container'>
         <h2 className='todaytodos_title'>Today Todolist</h2>
-        <CreateTodo />
+        <CreateTodayTodo />
+        {/* <span className='todaytodos_date'>{today}</span> */}
         {todaytodos.length === 0 ? (
           <p className='todaytodos_empty'>할 일이 없습니다</p>
         ) : (

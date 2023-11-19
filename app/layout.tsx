@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <nav className='nav'>
           <Link href={"/"} className='todaytodo'>Today</Link>
-          <Link href={"/weektodo"} className='week'>Week</Link>
+          <Link href={"/month"} className='month'>Month</Link>
           <Link href={"/bucketbox"} className='bucketbox'>BucketBox</Link>
         </nav>
         <Providers>{children}</Providers>
