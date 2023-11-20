@@ -28,7 +28,7 @@
   background-color: black;
 }
 
-.createtodo_input:focus{
+.createtodaytodo_input:focus{
   outline: none;
 }
 

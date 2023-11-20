@@ -2,38 +2,38 @@
 import { useState } from 'react'
 import './TodayTodo.css'
 import { useAppDispatch } from '@/store/hooks';
-import { deleteTodos, updateCompleted, updateTodos } from '@/store/todaytodosSlice';
-import { updateToPocket } from '@/store/updateToPocketSlice';
+import { Todo, deleteTodo, updateTodo } from '../../../../store/todoSlice';
+import { today } from '../toLocaleDateString';
 
-const TodayTodo = ({ id, todo_content }: {id: number; todo_content: string}) => {
+const TodayTodo = ({ id, todo_content }: {id: string; todo_content: string}) => {
   const dispatch = useAppDispatch();
   const [completed, setCompleted] = useState(false); 
   const [todoContent, setTodoContent] = useState(todo_content);
   const [update, setUpdate] = useState(false); // true: 수정가능, false: 수정불가능
-  const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric', 
-    month: '2-digit', 
-    day: '2-digit'
-  };
-  const formattedDate = new Date().toLocaleDateString('ko-KR', options).replace(/\. /g, '-').replace(/\./, '');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if(update){ // 업데이트가 true일때 제출? = 수정끝
-      dispatch(updateTodos({ update_id: id, update_todo: todoContent }));
-      const updateTodo = {
+      const updatedTodo: Todo = {
+        id: id,
         content: todoContent,
-        dateTodo: formattedDate,
+        dateTodo: today,
+        completed: false,
       }
-      const id_str = id.toString();
-      dispatch(updateToPocket({id: id_str, updateTodo}))
+      dispatch(updateTodo({id, updatedTodo}))
     }
     setUpdate(!update);
   }     
 
   const handleCompleted = () => {
     setCompleted(!completed); // e.target.checked
-    dispatch(updateCompleted({ update_id: id, update_completed: completed }));
+    const updatedTodo = {
+      id: id,
+      content: todoContent,
+      dateTodo: today,
+      completed: completed,
+    }
+    dispatch(updateTodo({id, updatedTodo}));
   }
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +41,7 @@ const TodayTodo = ({ id, todo_content }: {id: number; todo_content: string}) => 
   }
 
   const handleDelete = () => {
-    dispatch(deleteTodos(id));
+    dispatch(deleteTodo(id));
   }
 
   return (

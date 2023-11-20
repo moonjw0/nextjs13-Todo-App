@@ -1,12 +1,11 @@
 'use client'
 import { useState } from 'react'
 import { useAppDispatch } from '@/store/hooks';
-import { addTodos } from '../../../../../store/monthtodosSlice'
 import './CreateTodo.css'
+import { postTodo } from '@/store/todoSlice';
 
-const CreateTodo = () => {
+const CreateTodo = ({formattedDate}: {formattedDate: string}) => {
   const dispatch = useAppDispatch();
-  const [todoDate, setTodoDate] = useState<Date>(new Date());
   const [todoContent, setTodoContent] = useState('');
 
   const options: Intl.DateTimeFormatOptions = {
@@ -14,12 +13,16 @@ const CreateTodo = () => {
     month: '2-digit', 
     day: '2-digit'
   };
-  const formattedDate = todoDate.toLocaleDateString('ko-KR', options).replace(/\. /g, '-').replace(/\./, '');
 
-  
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(addTodos({ content: todoContent, dateTodo_str: formattedDate})); 
+    const newTodo = {
+      content: todoContent,
+      dateTodo: formattedDate,
+      completed: false,
+    }
+    // console.log(newTodo);
+    dispatch(postTodo(newTodo)); // pocketbase 추가
     setTodoContent('');
   }
 
@@ -29,7 +32,7 @@ const CreateTodo = () => {
 
   return (
     <form className='createtodo_container' onSubmit={handleSubmit}>
-      <input type='text' value={todoContent} placeholder="새로운 할일 추가하기" className='createtodo_input' onChange={handleInput}/>
+      <input type='text' value={todoContent} placeholder={`[${formattedDate}]  새로운 할일 추가하기`}className='createtodo_input' onChange={handleInput}/>
       <button type='submit' className='todaytodo_register'>저장</button>
     </form>
   )

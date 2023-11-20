@@ -7,11 +7,16 @@
 .monthtodos_container{
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
   width: 70vw;
   /* border-bottom: solid 1px white; */
   margin-top: 100px;
+}
+
+.monthtodos_date{
+  margin: 20px;
+  font-size: 16px;
 }
 
 .todaytodos_empty{
