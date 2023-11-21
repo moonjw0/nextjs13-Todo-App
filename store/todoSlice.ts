@@ -5,7 +5,7 @@ export interface Todo {
   id: string;
   dateTodo: string;
   content: string;
-  completed: boolean
+  completed: boolean;
 }
 
 export interface Todos {
@@ -19,12 +19,6 @@ const initialState: Todos = {
   loading: 'idle',
   error: "",
 };
-
-export interface PostTodo {
-  dateTodo: string;
-  content: string;
-  completed: boolean
-}
 
 // pocketbase 전체 데이터 가져오는 부분
 // RTK 저장은 따로 extraReducer에서
@@ -43,7 +37,7 @@ export const fetchTodo = createAsyncThunk(
 // pocketbase로 새로 생성된 데이터 전송하는 부분
 export const postTodo = createAsyncThunk( 
   'todo/postTodo', 
-  async(newTodo: PostTodo, thunkAPI) => {
+  async(newTodo: Omit<Todo, 'id'>, thunkAPI) => {
     try{
       const response = await axios.post('http://127.0.0.1:8090/api/collections/todolist/records', newTodo);
       // console.log('Todos response', response.data);
@@ -120,7 +114,11 @@ export const todoSlice = createSlice({
     })
     .addCase(updateTodo.fulfilled, (state, action) => {
       state.loading = 'success';
-      state.todos.push(action.payload);
+      state.todos.map(todo => {
+        if(todo.id == action.payload.id){
+          todo.content = action.payload.updatedTodo;
+        }
+      });
     })
     .addCase(updateTodo.rejected, (state, action) => {
       state.loading = 'failed';

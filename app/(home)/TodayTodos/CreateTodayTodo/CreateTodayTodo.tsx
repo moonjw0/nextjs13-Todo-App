@@ -4,7 +4,7 @@ import { useAppDispatch } from '@/store/hooks';
 import { formattedDate } from '../toLocaleDateString';
 import CalendarModal from './CalendarModal/CalendarModal';
 import './CreateTodayTodo.css'
-import { postTodo } from '@/store/todoSlice';
+import { Todo, postTodo } from '@/store/todoSlice';
 
 const CreateTodayTodo = () => {
   const dispatch = useAppDispatch();
@@ -14,7 +14,7 @@ const CreateTodayTodo = () => {
   
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newTodo = {
+    const newTodo: Omit<Todo, 'id'> = {
       content: todoContent,
       dateTodo: formattedDate(todoDate),
       completed: false,

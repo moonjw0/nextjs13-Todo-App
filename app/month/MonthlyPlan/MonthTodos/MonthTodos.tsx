@@ -4,9 +4,8 @@ import { useEffect } from 'react'
 import { Todo, fetchTodo } from '@/store/todoSlice';
 import { formattedDate } from '@/app/(home)/TodayTodos/toLocaleDateString';
 import CreateTodo from './CreateTodo/CreateTodo';
-import TodayTodo from '@/app/(home)/TodayTodos/TodayTodo/TodayTodo';
+import MonthTodo from './MonthTodo/MonthTodo';
 import './MonthTodos.css'
-
 
 const MonthTodos = ({todoDate}: {todoDate: Date}) => {
   const dispatch = useAppDispatch(); 
@@ -31,7 +30,7 @@ const MonthTodos = ({todoDate}: {todoDate: Date}) => {
             <p className='todaytodos_empty'>할 일이 없습니다</p>
           ) : (
               todos.map((todo: Todo) => (
-              <TodayTodo key={todo.id} id={todo.id} todo_content={todo.content}/>
+              <MonthTodo key={todo.id} todo={todo}/>
               ))
           )}
       </div>

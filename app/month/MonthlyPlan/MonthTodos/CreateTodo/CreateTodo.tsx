@@ -8,12 +8,6 @@ const CreateTodo = ({formattedDate}: {formattedDate: string}) => {
   const dispatch = useAppDispatch();
   const [todoContent, setTodoContent] = useState('');
 
-  const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric', 
-    month: '2-digit', 
-    day: '2-digit'
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newTodo = {
@@ -21,7 +15,6 @@ const CreateTodo = ({formattedDate}: {formattedDate: string}) => {
       dateTodo: formattedDate,
       completed: false,
     }
-    // console.log(newTodo);
     dispatch(postTodo(newTodo)); // pocketbase 추가
     setTodoContent('');
   }
